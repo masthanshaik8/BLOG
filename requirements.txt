@@ -1,0 +1,19 @@
+crewai
+python-dotenv
+
+
+
+# blog/
+#│
+├#── app.py                
+#├── main.py               
+#├── .env
+#├── requirements.txt
+#│
+#├── templates/           
+#│   ├── index.html
+#│   └── result.html
+#│
+#├── config/
+#├── src/
+#└── outputs/

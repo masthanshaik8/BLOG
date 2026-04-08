@@ -1,0 +1,17 @@
+research_task:
+  description: >
+    Research the topic: {topic} and provide detailed insights.
+  expected_output: >
+    A detailed research report.
+
+writing_task:
+  description: >
+    Write a blog based on the research about {topic}.
+  expected_output: >
+    A complete blog article.
+
+editing_task:
+  description: >
+    Edit and improve the blog for clarity and correctness.
+  expected_output: >
+    Final polished blog.
