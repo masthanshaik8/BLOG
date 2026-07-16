@@ -1,69 +1,63 @@
-from crewai import Agent, Task, Crew
-from dotenv import load_dotenv
-import yaml
 import os
+import re
+from groq import Groq
+from dotenv import load_dotenv
 
 load_dotenv()
 
-# Load YAML configs
-def load_yaml(file_path):
-    with open(file_path, "r") as file:
-        return yaml.safe_load(file)
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+MODEL = "llama-3.3-70b-versatile"
+
+
+def clean(text):
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    text = re.sub(r'\*(.*?)\*', r'\1', text)
+    text = re.sub(r'#{1,6}\s*', '', text)
+    return text.strip()
+
+
+def chat(system, user):
+    response = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+        ],
+    )
+    return clean(response.choices[0].message.content)
 
 
 def create_crew(topic):
-    agents_config = load_yaml("config/agents.yaml")
-    tasks_config = load_yaml("config/tasks.yaml")
+    return BlogPipeline(topic)
 
-    # Agents
-    researcher = Agent(
-        role=agents_config["researcher"]["role"],
-        goal=agents_config["researcher"]["goal"],
-        backstory=agents_config["researcher"]["backstory"],
-        verbose=True
-    )
 
-    writer = Agent(
-        role=agents_config["writer"]["role"],
-        goal=agents_config["writer"]["goal"],
-        backstory=agents_config["writer"]["backstory"],
-        verbose=True
-    )
+class BlogPipeline:
+    def __init__(self, topic):
+        self.topic = topic
 
-    editor = Agent(
-        role=agents_config["editor"]["role"],
-        goal=agents_config["editor"]["goal"],
-        backstory=agents_config["editor"]["backstory"],
-        verbose=True
-    )
+    def kickoff(self):
+        research = chat(
+            "You are a Senior Research Analyst. Provide detailed, accurate insights on the given topic.",
+            f"Research this topic thoroughly and provide key insights: {self.topic}",
+        )
 
-    # Tasks
-    research_task = Task(
-        description=tasks_config["research_task"]["description"].format(topic=topic),
-        expected_output=tasks_config["research_task"]["expected_output"],
-        agent=researcher,
-        output_file="outputs/research_output.md"
-    )
+        draft = chat(
+            "You are a Professional Blog Writer. Write engaging, well-structured blog posts based on research.",
+            f"Write a complete blog article about '{self.topic}' using this research:\n\n{research}",
+        )
 
-    writing_task = Task(
-        description=tasks_config["writing_task"]["description"].format(topic=topic),
-        expected_output=tasks_config["writing_task"]["expected_output"],
-        agent=writer,
-        output_file="outputs/draft_blog.md"
-    )
+        final = chat(
+            "You are a Content Editor. Polish blog posts for grammar, clarity, flow, and quality.",
+            f"Edit and improve this blog article:\n\n{draft}",
+        )
 
-    editing_task = Task(
-        description=tasks_config["editing_task"]["description"].format(topic=topic),
-        expected_output=tasks_config["editing_task"]["expected_output"],
-        agent=editor,
-        output_file="outputs/final_blog.md"
-    )
+        self._save_outputs(research, draft, final)
+        return final
 
-    # Crew
-    crew = Crew(
-        agents=[researcher, writer, editor],
-        tasks=[research_task, writing_task, editing_task],
-        verbose=True
-    )
-
-    return crew
+    def _save_outputs(self, research, draft, final):
+        base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        out = os.path.join(base, "outputs")
+        os.makedirs(out, exist_ok=True)
+        for name, content in [("research_output.md", research), ("draft_blog.md", draft), ("final_blog.md", final)]:
+            with open(os.path.join(out, name), "w", encoding="utf-8") as f:
+                f.write(content)
