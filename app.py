@@ -72,5 +72,4 @@ def download_pdf():
 
 
 if __name__ == "__main__":
-    #app.run(debug=os.getenv("FLASK_DEBUG", "false").lower() == "true", port=5000)
     app.run(debug=True, use_reloader=False, port=8000)
