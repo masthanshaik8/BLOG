@@ -292,5 +292,6 @@ Display on Web Page
 - AI/ML Engineer
 - Generative AI Enthusiast
 - Flask & CrewAI Developer
+- Mail : shaikmasthan7337@gmail.com
 
 ---
