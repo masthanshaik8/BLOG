@@ -1,5 +1,4 @@
-#  AI Blog Generator 
-using CrewAI, Groq & Flask
+#  AI Blog Generator <h5>using CrewAI, Groq & Flask<h5>
 
 An AI-powered multi-agent blog generation system that automates the complete content creation process. The application performs research on a given topic, generates a well-structured draft, and produces a polished, publication-ready blog using CrewAI agents and the Groq LLM.
 
