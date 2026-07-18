@@ -4,16 +4,16 @@ An AI-powered multi-agent blog generation system that automates the complete con
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 This project leverages multiple AI agents working together to automate blog writing.
 
 The workflow consists of:
 
-- 🔍 Research Agent – Collects detailed information on the given topic.
-- ✍️ Writer Agent – Generates a structured blog draft.
-- 📝 Editor Agent – Reviews, refines, and improves readability.
-- 🌐 Flask Web Application – Provides a simple interface for users to generate blogs.
+-  Research Agent – Collects detailed information on the given topic.
+-  Writer Agent – Generates a structured blog draft.
+-  Editor Agent – Reviews, refines, and improves readability.
+-  Flask Web Application – Provides a simple interface for users to generate blogs.
 
 ---
 
@@ -50,7 +50,7 @@ BLOG/
 
 ---
 
-# ⚙️ Technologies Used
+#  Technologies Used
 
 - Python
 - Flask
@@ -64,7 +64,7 @@ BLOG/
 
 ---
 
-# 📦 Project Requirements
+#  Project Requirements
 
 Install Python 3.10 or later.
 
@@ -109,7 +109,7 @@ markdown
 
 ---
 
-# 🔑 Environment Variables
+#  Environment Variables
 
 Create a `.env` file.
 
@@ -119,7 +119,7 @@ GROQ_API_KEY=your_groq_api_key
 
 ---
 
-# ▶️ Run the Project
+#  Run the Project
 
 Start the Flask application
 
@@ -147,7 +147,7 @@ http://127.0.0.1:8000
 
 ---
 
-# 🔄 Project Workflow
+#  Project Workflow
 
 ```
                 User Topic
@@ -177,7 +177,7 @@ research_output.md
 
 ---
 
-# 📄 Generated Files
+#  Generated Files
 
 ## 1. research_output.md
 
@@ -222,7 +222,7 @@ Includes:
 
 ---
 
-# ✨ Features
+#  Features
 
 - Multi-Agent AI Architecture
 - Automated Topic Research
@@ -239,7 +239,7 @@ Includes:
 
 ---
 
-# 📊 Pipeline
+#  Pipeline
 
 ```
 User Input
@@ -268,7 +268,7 @@ Display on Web Page
 
 ---
 
-# 🎯 Future Enhancements
+#  Future Enhancements
 
 - SEO Optimization
 - Image Generation
@@ -283,7 +283,7 @@ Display on Web Page
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 **Masthan Shaik**
 
